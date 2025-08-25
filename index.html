@@ -35,13 +35,13 @@
       to { opacity: 0; }
     }
 
-    /* 🎂 Detailed Cake */
+    /* 🎂 Wider Cake */
     .cake {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 220px;
+      width: 280px;   /* increased width */
       height: 160px;
       background: #8b4513;
       border-radius: 10px;
@@ -55,7 +55,7 @@
       top: -35px;
       left: 50%;
       transform: translateX(-50%);
-      width: 240px;
+      width: 300px;   /* wider top too */
       height: 35px;
       background: #d2691e;
       border-radius: 10px 10px 0 0;
@@ -76,7 +76,7 @@
       bottom: -15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 260px;
+      width: 320px;  /* wider plate */
       height: 20px;
       background: #eee;
       border-radius: 50%;
@@ -92,11 +92,11 @@
       border-radius: 2px;
     }
 
-    .candle:nth-child(1) { left: 40px; }
-    .candle:nth-child(2) { left: 80px; }
-    .candle:nth-child(3) { left: 120px; }
-    .candle:nth-child(4) { left: 160px; }
-    .candle:nth-child(5) { left: 200px; }
+    .candle:nth-child(1) { left: 60px; }
+    .candle:nth-child(2) { left: 110px; }
+    .candle:nth-child(3) { left: 160px; }
+    .candle:nth-child(4) { left: 210px; }
+    .candle:nth-child(5) { left: 260px; }
 
     .flame {
       position: absolute;
@@ -151,30 +151,6 @@
       top: 0;
     }
 
-    /* 🎀 Curly Ribbon String */
-    .string {
-      position: absolute;
-      top: 60px;
-      left: 50%;
-      width: 2px;
-      height: 90px;
-      transform: translateX(-50%);
-      background: repeating-linear-gradient(
-        to bottom,
-        #444,
-        #444 5px,
-        transparent 5px,
-        transparent 10px
-      );
-      animation: curly 1.5s infinite ease-in-out;
-    }
-
-    @keyframes curly {
-      0%   { transform: translateX(-50%) rotate(-5deg); }
-      50%  { transform: translateX(-50%) rotate(5deg); }
-      100% { transform: translateX(-50%) rotate(-5deg); }
-    }
-
     @keyframes floatUp {
       from { transform: translateY(0) rotate(-45deg); opacity: 1; }
       to { transform: translateY(-120vh) rotate(-45deg); opacity: 0; }
@@ -217,7 +193,10 @@
     }
 
     .btn {
-      margin-top: 20px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 50px; /* default bottom */
       padding: 10px 20px;
       background: #ff7f7f;
       border: none;
@@ -226,6 +205,12 @@
       cursor: pointer;
       color: white;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .btn.centered {
+      top: 50%;
+      bottom: auto;
+      transform: translate(-50%, -50%);
     }
   </style>
 </head>
@@ -280,9 +265,9 @@
           spawnBalloons(15);
         }, 1500);
       } else if (step === 4) {
-        // Show button
+        // Show button in center if cake is faded out
         let btn = document.createElement("button");
-        btn.className = "btn";
+        btn.className = "btn centered";
         btn.innerText = "press here if u r my good boy :p";
         btn.onclick = () => {
           cakeScene.style.opacity = 0;
@@ -304,10 +289,6 @@
         b.style.left = Math.random() * 90 + "vw";
         b.style.background = colors[Math.floor(Math.random() * colors.length)];
         b.style.animationDuration = (4 + Math.random() * 2) + "s";
-
-        let s = document.createElement("div");
-        s.className = "string";
-        b.appendChild(s);
 
         document.body.appendChild(b);
         setTimeout(() => b.remove(), 6000);
